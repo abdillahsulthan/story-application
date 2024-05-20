@@ -22,6 +22,18 @@ class StoryRepository (
         }
     }
 
+    suspend fun getStoriesWithLocation(token: String): List<Story> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.getStoriesWithLocation("Bearer $token")
+                response.listStory
+            } catch (e: Exception) {
+                Log.e(TAG, "getStoriesWithLocation: ${e.message}", e)
+                emptyList()
+            }
+        }
+    }
+
     companion object {
         private const val TAG = "StoryRepository"
 

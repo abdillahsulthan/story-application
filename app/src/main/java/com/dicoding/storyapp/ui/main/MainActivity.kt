@@ -20,6 +20,7 @@ import com.dicoding.storyapp.ui.adapter.StoryAdapter
 import com.dicoding.storyapp.ui.auth.AuthenticationActivity
 import com.dicoding.storyapp.ui.auth.AuthenticationViewModel
 import com.dicoding.storyapp.ui.auth.AuthenticationViewModelFactory
+import com.dicoding.storyapp.ui.maps.MapsActivity
 import com.dicoding.storyapp.ui.uploadstory.UploadStoryActivity
 
 class MainActivity : AppCompatActivity() {
@@ -87,8 +88,17 @@ class MainActivity : AppCompatActivity() {
                 logout()
                 true
             }
+            R.id.action_map -> {
+                mapActivity()
+                true
+            }
             else -> false
         }
+    }
+
+    private fun mapActivity() {
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun logout() {
@@ -106,7 +116,6 @@ class MainActivity : AppCompatActivity() {
         }
         builder.show()
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
