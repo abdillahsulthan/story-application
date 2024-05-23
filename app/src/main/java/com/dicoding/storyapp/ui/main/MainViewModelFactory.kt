@@ -1,5 +1,6 @@
 package com.dicoding.storyapp.ui.main
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.storyapp.data.remote.retrofit.ApiConfig
@@ -21,10 +22,10 @@ class MainViewModelFactory(private val storyRepository: StoryRepository) : ViewM
         @Volatile
         private var INSTANCE: MainViewModelFactory? = null
         @JvmStatic
-        fun getInstance(): MainViewModelFactory {
+        fun getInstance(context: Context, token: String): MainViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(MainViewModelFactory::class.java) {
-                    INSTANCE = MainViewModelFactory(StoryInjection.provideRepository(ApiConfig.getApiService()))
+                    INSTANCE = MainViewModelFactory(StoryInjection.provideRepository(context, ApiConfig.getApiService(), token))
                 }
             }
             return INSTANCE as MainViewModelFactory

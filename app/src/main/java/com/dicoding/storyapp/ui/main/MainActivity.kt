@@ -14,8 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
-import com.dicoding.storyapp.data.remote.response.Story
 import com.dicoding.storyapp.databinding.ActivityMainBinding
+import com.dicoding.storyapp.ui.adapter.LoadingStateAdapter
 import com.dicoding.storyapp.ui.adapter.StoryAdapter
 import com.dicoding.storyapp.ui.auth.AuthenticationActivity
 import com.dicoding.storyapp.ui.auth.AuthenticationViewModel
@@ -26,7 +26,6 @@ import com.dicoding.storyapp.ui.uploadstory.UploadStoryActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private val authenticationViewModel by viewModels<AuthenticationViewModel> {
         AuthenticationViewModelFactory.getInstance(context = this)
     }
@@ -47,19 +46,8 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, AuthenticationActivity::class.java)
                 startActivity(intent)
             }
-
-            val mainViewModel by viewModels<MainViewModel>(){
-                MainViewModelFactory.getInstance()
-            }
-
-            mainViewModel.getStories(it.token)
-
-            mainViewModel.stories.observe(this) { stories ->
-                setStories(stories)
-            }
-
-            mainViewModel.isLoading.observe(this) { isLoading ->
-                showLoading(isLoading)
+            else {
+                getData(it.token)
             }
         }
 
@@ -117,14 +105,19 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun setStories(stories: List<Story>) {
+    private fun getData(token: String) {
         val adapter = StoryAdapter()
-        adapter.submitList(stories)
-        binding.rvStories.adapter = adapter
+        binding.rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+        val mainViewModel by viewModels<MainViewModel> {
+            MainViewModelFactory.getInstance(this, token)
+        }
+        mainViewModel.getStories().observe(this) {
+            adapter.submitData(lifecycle, it)
+        }
     }
 
     private fun playAnimation() {

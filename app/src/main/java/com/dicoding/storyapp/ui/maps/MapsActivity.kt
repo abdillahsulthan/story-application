@@ -58,10 +58,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         val mapsActivityModel by viewModels<MapsViewModel>(){
-            MapsViewModelFactory.getInstance()
+            MapsViewModelFactory.getInstance(this, token)
         }
 
-        mapsActivityModel.getStoriesWithLocation(token)
+        mapsActivityModel.getStoriesWithLocation()
 
         mapsActivityModel.stories.observe(this) {
             storiesMarker(it)

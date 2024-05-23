@@ -13,9 +13,9 @@ class MapsViewModel(private val storyRepository: StoryRepository) : ViewModel() 
     private val _stories = MutableLiveData<List<Story>>()
     val stories: LiveData<List<Story>> = _stories
 
-    fun getStoriesWithLocation(token: String) {
+    fun getStoriesWithLocation() {
         viewModelScope.launch {
-            _stories.value = storyRepository.getStoriesWithLocation(token)
+            _stories.value = storyRepository.getStoriesWithLocation()
         }
     }
 }

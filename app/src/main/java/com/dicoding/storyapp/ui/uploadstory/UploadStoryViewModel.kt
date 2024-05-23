@@ -20,9 +20,9 @@ class UploadStoryViewModel(private val token: String): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun uploadStory(description: RequestBody, image: MultipartBody.Part) {
+    fun uploadStory(description: RequestBody, image: MultipartBody.Part, lat: RequestBody?, lon: RequestBody?) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().uploadStory(token = "Bearer $token", description = description, file = image)
+        val client = ApiConfig.getApiService().uploadStory(token = "Bearer $token", description = description, file = image, lat = lat, lon = lon)
         client.enqueue(object : Callback<CreateStory> {
             override fun onResponse(
                 call: Call<CreateStory>,

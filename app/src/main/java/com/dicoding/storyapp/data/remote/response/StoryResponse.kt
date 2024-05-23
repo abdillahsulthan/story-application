@@ -1,6 +1,8 @@
 package com.dicoding.storyapp.data.remote.response
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -23,8 +25,11 @@ data class CreateStory(
     val message: String
 )
 
+@Entity(tableName = "story")
 @Parcelize
 data class Story (
+
+    @PrimaryKey
     @field:SerializedName("id")
     val id: String,
 

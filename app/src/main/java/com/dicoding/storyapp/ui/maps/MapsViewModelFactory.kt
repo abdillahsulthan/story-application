@@ -1,5 +1,6 @@
 package com.dicoding.storyapp.ui.maps
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.storyapp.data.remote.retrofit.ApiConfig
@@ -21,10 +22,10 @@ class MapsViewModelFactory(private val storyRepository: StoryRepository) : ViewM
         @Volatile
         private var INSTANCE: MapsViewModelFactory? = null
         @JvmStatic
-        fun getInstance(): MapsViewModelFactory {
+        fun getInstance(context: Context, token: String): MapsViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(MapsViewModelFactory::class.java) {
-                    INSTANCE = MapsViewModelFactory(StoryInjection.provideRepository(ApiConfig.getApiService()))
+                    INSTANCE = MapsViewModelFactory(StoryInjection.provideRepository(context, ApiConfig.getApiService(), token))
                 }
             }
             return INSTANCE as MapsViewModelFactory

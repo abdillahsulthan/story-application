@@ -33,4 +33,6 @@
     <string name="terrain_type">Terrain</string>
     <string name="hybrid_type">Hybrid</string>
     <string name="posted_by">Posted by %s</string>
+    <string name="retry">Retry</string>
+    <string name="checkbox_location_text">Use current location</string>
 </resources>
