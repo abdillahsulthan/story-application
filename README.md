@@ -17,10 +17,6 @@ The Story Application is an Android app developed as the culminating project for
 | --- | --- | --- |
 | ![](assets/login.png) | ![](assets/register.png) | ![](assets/home.png) |
 
-| Upload | Map | Camera |
-| --- | --- | --- |
-| ![](assets/upload.png) | ![](assets/map.png) | ![](assets/camera.png) |
-
-| Story Detail |
-| --- |
-| ![](assets/detail.png) |
+| Upload | Map | Camera | Story Detail |
+| --- | --- | --- | --- |
+| ![](assets/upload.png) | ![](assets/map.png) | ![](assets/camera.png) | ![](assets/detail.png) |
